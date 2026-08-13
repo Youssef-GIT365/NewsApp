@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/core/l10n/app_localizations.dart';
 import 'package:news/core/routes/app_routes.dart';
 import 'package:news/core/theme/app_theme.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:news/features/categories/viewModel/localization_cubit.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,16 +15,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      locale: Locale("en"),
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      routerConfig: AppRouter.router,
-      themeMode: ThemeMode.light,
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+    return BlocProvider(
+      create: (BuildContext context) => LocalizationCubit()..loadLang(),
+      child: BlocBuilder<LocalizationCubit, String>(
+        builder: (BuildContext context, state) {
+          return MaterialApp.router(
+            locale: Locale(state),
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            routerConfig: AppRouter.router,
+            themeMode: ThemeMode.light,
+            title: 'Flutter Demo',
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+          );
+        },
+      ),
     );
   }
 }

@@ -13,4 +13,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get go_to_home => 'اذهب الى الرئيسيه';
+
+  @override
+  String get good_morning => 'صباح الخير إليكم بعض الأخبار';
 }

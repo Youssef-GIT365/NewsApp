@@ -1,8 +1,10 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:news/core/gen/assets.gen.dart';
 import 'package:news/core/theme/appcolors.dart';
+import 'package:news/features/categories/viewModel/localization_cubit.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -129,39 +131,49 @@ class CustomDrawer extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: CustomDropdown<String>(
-                    hintText: "Arabic",
+                BlocBuilder<LocalizationCubit, String>(
+                  builder: (BuildContext context, state) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: CustomDropdown<String>(
+                        hintText: "en",
 
-                    items: ["Arabic", "english"],
-                    decoration: CustomDropdownDecoration(
-                      closedFillColor: Appcolors.MainBackDark,
-                      expandedFillColor: Appcolors.MainBackWhite,
-                      closedSuffixIcon: Assets.icons.polygon1.svg(),
-                      hintStyle: TextStyle(
-                        color: Appcolors.MainBackWhite,
-                        fontSize: 16,
+                        items: ["ar", "en"],
+                        decoration: CustomDropdownDecoration(
+                          closedFillColor: Appcolors.MainBackDark,
+                          expandedFillColor: Appcolors.MainBackWhite,
+                          closedSuffixIcon: Assets.icons.polygon1.svg(),
+                          hintStyle: TextStyle(
+                            color: Appcolors.MainBackWhite,
+                            fontSize: 16,
+                          ),
+                          headerStyle: TextStyle(
+                            color: Appcolors.MainBackWhite,
+                            fontSize: 16,
+                          ),
+                          listItemStyle: TextStyle(
+                            color: Appcolors.MainBackDark,
+                            fontSize: 16,
+                          ),
+                          closedBorder: Border.all(
+                            color: Appcolors.MainBackWhite,
+                          ),
+                        ),
+                        animation: const CustomDropdownAnimation(
+                          type: DropdownAnimationType
+                              .scaleFade, // size, fade, sizeFade, scale, scaleFade, slide
+                          duration: Duration(milliseconds: 350),
+                          curve: Curves.easeOutCubic,
+                          staggerItems: true,
+                        ),
+                        onChanged: (value) {
+                          if (value != null) {
+                            context.read<LocalizationCubit>().changeLang(value);
+                          }
+                        },
                       ),
-                      headerStyle: TextStyle(
-                        color: Appcolors.MainBackWhite,
-                        fontSize: 16,
-                      ),
-                      listItemStyle: TextStyle(
-                        color: Appcolors.MainBackDark,
-                        fontSize: 16,
-                      ),
-                      closedBorder: Border.all(color: Appcolors.MainBackWhite),
-                    ),
-                    animation: const CustomDropdownAnimation(
-                      type: DropdownAnimationType
-                          .scaleFade, // size, fade, sizeFade, scale, scaleFade, slide
-                      duration: Duration(milliseconds: 350),
-                      curve: Curves.easeOutCubic,
-                      staggerItems: true,
-                    ),
-                    onChanged: (value) {},
-                  ),
+                    );
+                  },
                 ),
               ],
             ),

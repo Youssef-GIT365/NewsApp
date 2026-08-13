@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/core/gen/assets.gen.dart';
 import 'package:news/core/l10n/app_localizations.dart';
 import 'package:news/core/models/category_model.dart';
@@ -65,10 +66,12 @@ class Homescreen extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: Text(
-              '''Good Morning
-Here is Some News For You''',
-              style: theme.textTheme.titleMedium!.copyWith(fontSize: 24),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                local.good_morning,
+                style: theme.textTheme.titleMedium!.copyWith(fontSize: 24),
+              ),
             ),
           ),
           Expanded(

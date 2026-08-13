@@ -13,4 +13,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get go_to_home => 'Go To Home';
+
+  @override
+  String get good_morning => 'Good Morning Here is Some News For You';
 }

@@ -109,6 +109,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Go To Home'**
   String get go_to_home;
+
+  /// No description provided for @good_morning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Morning Here is Some News For You'**
+  String get good_morning;
 }
 
 class _AppLocalizationsDelegate
