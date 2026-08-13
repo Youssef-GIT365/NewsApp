@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news/core/gen/assets.gen.dart';
+import 'package:news/core/l10n/app_localizations.dart';
 import 'package:news/core/models/category_model.dart';
 import 'package:news/features/home/CategoryCard.dart';
 import 'package:news/features/home/drawer.dart';
@@ -9,6 +10,7 @@ class Homescreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     final List<CategoryModel> categories = [
       CategoryModel(
         id: 'general',
@@ -56,7 +58,7 @@ class Homescreen extends StatelessWidget {
           IconButton(onPressed: () {}, icon: Assets.icons.searchIcon.image()),
         ],
 
-        title: Text("Home", style: theme.textTheme.titleLarge),
+        title: Text(local.home, style: theme.textTheme.titleLarge),
         // leading: ,
       ),
       body: Column(

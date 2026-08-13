@@ -17,6 +17,10 @@ dependencies:
   dio: ^5.11.0
   timeago: ^3.7.1
   webview_flutter: ^4.14.1
+  flutter_localization: ^0.4.1
+  intl: ^0.20.2
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -30,6 +34,7 @@ flutter_gen:
 
 flutter:
   uses-material-design: true
+  generate: true # Add this line
   assets:
     - assets/images/
     - assets/icons/
