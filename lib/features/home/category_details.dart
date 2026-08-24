@@ -7,6 +7,7 @@ import 'package:news/features/categories/viewModel/source_provider.dart';
 import 'package:news/features/home/drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:url_launcher/url_launcher.dart';
 
 class CategoryDetails extends StatefulWidget {
   final String categoryId;
@@ -17,9 +18,11 @@ class CategoryDetails extends StatefulWidget {
 }
 
 class _CategoryDetailsState extends State<CategoryDetails> {
+  final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _scrollController.addListener(_onScroll);
       if (!mounted) return;
       await context.read<CategoryProvider>().getcategories(widget.categoryId);
       if (!mounted) return;
@@ -34,6 +37,21 @@ class _CategoryDetailsState extends State<CategoryDetails> {
       }
     });
     super.initState();
+  }
+
+  void _onScroll() {
+    if (!_scrollController.hasClients) return;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.position.pixels;
+    if (currentScroll >= (maxScroll - 200)) {
+      context.read<SourceProvider>().loadMore();
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -78,6 +96,9 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                           ? selectedSource.id
                           : selectedSource.name;
                       if (query.isNotEmpty) {
+                        if (_scrollController.hasClients) {
+                          _scrollController.jumpTo(0);
+                        }
                         context.read<SourceProvider>().getSources(query);
                       }
                     },
@@ -87,26 +108,38 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                   ),
                 ),
                 Expanded(
-                  child: vmforsources.sources.isEmpty
-                      ? const Center(child: Text("No news available."))
-                      : ListView.builder(
-                          itemCount: vmforsources.sources.length,
-                          itemBuilder: (context, index) {
-                            final item = vmforsources.sources[index];
-                            String time = "";
-                            
-                            try {
-                              if (item.publishedAt.isNotEmpty) {
-                                DateTime parsedDate = DateTime.parse(
-                                  item.publishedAt,
-                                );
-                                time = timeago.format(parsedDate);
-                              }
-                            } catch (_) {
-                              time = item.publishedAt;
-                            }
-                            return Container(
-                              padding: const EdgeInsets.all(12),
+                  child: vmforsources.isLoading && vmforsources.sources.isEmpty
+                      ? const Center(child: CircularProgressIndicator())
+                      : vmforsources.sources.isEmpty
+                          ? const Center(child: Text("No news available."))
+                          : ListView.builder(
+                              controller: _scrollController,
+                              itemCount: vmforsources.sources.length +
+                                  (vmforsources.isLoading ? 1 : 0),
+                              itemBuilder: (context, index) {
+                                if (index == vmforsources.sources.length) {
+                                  return const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  );
+                                }
+                                final item = vmforsources.sources[index];
+                                String time = "";
+                                final Uri articleUrl = Uri.parse(item.url);
+                                try {
+                                  if (item.publishedAt.isNotEmpty) {
+                                    DateTime parsedDate = DateTime.parse(
+                                      item.publishedAt,
+                                    );
+                                    time = timeago.format(parsedDate);
+                                  }
+                                } catch (_) {
+                                  time = item.publishedAt;
+                                }
+                                return Container(
+                                  padding: const EdgeInsets.all(12),
                               margin: const EdgeInsets.symmetric(
                                 vertical: 6,
                                 horizontal: 16,
@@ -231,12 +264,8 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                                                               ),
                                                         ),
                                                       ),
-                                                      onPressed: () {
-                                                        context.pop();
-                                                        context.go(
-                                                          "/ArticleWebViewScreen",
-                                                          extra: item.url,
-                                                        );
+                                                      onPressed: () async {
+                                                        await launchUrl(articleUrl);
                                                       },
                                                       child: const Text(
                                                         "View Full Article",

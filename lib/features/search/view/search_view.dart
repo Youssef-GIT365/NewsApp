@@ -99,16 +99,16 @@ class _SearchViewState extends State<SearchView> {
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) =>
                                 Container(
-                              height: 180,
-                              color: Colors.grey.shade800,
-                              child: const Center(
-                                child: Icon(
-                                  Icons.broken_image,
-                                  color: Colors.white54,
-                                  size: 40,
+                                  height: 180,
+                                  color: Colors.grey.shade800,
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.broken_image,
+                                      color: Colors.white54,
+                                      size: 40,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
                           )
                         : const SizedBox(height: 180),
                   ),
@@ -139,11 +139,8 @@ class _SearchViewState extends State<SearchView> {
                     ),
                     onPressed: () {
                       Navigator.of(bottomSheetContext).pop();
-                      if (item.url != null && item.url!.isNotEmpty) {
-                        context.push(
-                          "/ArticleWebViewScreen",
-                          extra: item.url,
-                        );
+                      if (item.url.isNotEmpty) {
+                        context.push("/ArticleWebViewScreen", extra: item.url);
                       }
                     },
                     child: Text(
@@ -274,10 +271,7 @@ class _SearchViewState extends State<SearchView> {
     );
   }
 
-  Widget _buildInitialView(
-    BuildContext context,
-    List<String> recentSearches,
-  ) {
+  Widget _buildInitialView(BuildContext context, List<String> recentSearches) {
     final theme = Theme.of(context);
     final local = AppLocalizations.of(context);
     final isDark = theme.brightness == Brightness.dark;
@@ -319,14 +313,16 @@ class _SearchViewState extends State<SearchView> {
               children: recentSearches.map((term) {
                 return InputChip(
                   label: Text(term),
-                  backgroundColor:
-                      isDark ? const Color(0xFF262626) : const Color(0xFFF0F0F0),
+                  backgroundColor: isDark
+                      ? const Color(0xFF262626)
+                      : const Color(0xFFF0F0F0),
                   labelStyle: TextStyle(
                     color: isDark ? Colors.white : Colors.black87,
                     fontWeight: FontWeight.w500,
                   ),
-                  deleteIconColor:
-                      isDark ? Colors.white54 : Colors.grey.shade600,
+                  deleteIconColor: isDark
+                      ? Colors.white54
+                      : Colors.grey.shade600,
                   deleteIcon: const Icon(Icons.close, size: 16),
                   onDeleted: () {
                     context.read<SearchCubit>().removeRecentSearch(term);
@@ -337,8 +333,7 @@ class _SearchViewState extends State<SearchView> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                     side: BorderSide(
-                      color:
-                          isDark ? Colors.white12 : Colors.grey.shade300,
+                      color: isDark ? Colors.white12 : Colors.grey.shade300,
                     ),
                   ),
                 );
@@ -360,8 +355,9 @@ class _SearchViewState extends State<SearchView> {
             children: _suggestedTopics.map((topic) {
               return ActionChip(
                 label: Text(topic),
-                backgroundColor:
-                    isDark ? const Color(0xFF262626) : const Color(0xFFF5F5F5),
+                backgroundColor: isDark
+                    ? const Color(0xFF262626)
+                    : const Color(0xFFF5F5F5),
                 labelStyle: TextStyle(
                   color: isDark ? Colors.white : Colors.black87,
                   fontWeight: FontWeight.w500,
@@ -427,17 +423,20 @@ class _SearchViewState extends State<SearchView> {
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) =>
                               Container(
-                            height: 180,
-                            color:
-                                isDark ? Colors.grey.shade800 : Colors.grey.shade200,
-                            child: Center(
-                              child: Icon(
-                                Icons.broken_image,
-                                color: isDark ? Colors.white54 : Colors.grey,
-                                size: 40,
+                                height: 180,
+                                color: isDark
+                                    ? Colors.grey.shade800
+                                    : Colors.grey.shade200,
+                                child: Center(
+                                  child: Icon(
+                                    Icons.broken_image,
+                                    color: isDark
+                                        ? Colors.white54
+                                        : Colors.grey,
+                                    size: 40,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
                         ),
                       )
                     : const SizedBox.shrink(),

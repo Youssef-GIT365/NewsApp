@@ -4,7 +4,7 @@ class SourcesModel {
   String UrlImage;
   String publishedAt;
   String? title;
-  String? url;
+  String url;
   SourcesModel({
     required this.UrlImage,
     required this.author,

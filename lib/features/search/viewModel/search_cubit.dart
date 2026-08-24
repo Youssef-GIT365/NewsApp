@@ -9,12 +9,10 @@ class SearchCubit extends Cubit<SearchState> {
   final LocalDataSource localDataSource;
   Timer? _debounceTimer;
 
-  SearchCubit({
-    SearchDataSource? dataSource,
-    LocalDataSource? localDataSource,
-  })  : dataSource = dataSource ?? SearchDataSource(),
-        localDataSource = localDataSource ?? LocalDataSource(),
-        super(SearchInitial()) {
+  SearchCubit({SearchDataSource? dataSource, LocalDataSource? localDataSource})
+    : dataSource = dataSource ?? SearchDataSource(),
+      localDataSource = localDataSource ?? LocalDataSource(),
+      super(SearchInitial()) {
     loadRecentSearches();
   }
 
@@ -38,6 +36,7 @@ class SearchCubit extends Cubit<SearchState> {
   }
 
   Future<void> search(String query) async {
+    if (isClosed) return;
     _debounceTimer?.cancel();
     final cleanQuery = query.trim();
 
