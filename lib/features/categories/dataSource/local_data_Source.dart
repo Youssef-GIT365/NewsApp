@@ -32,5 +32,17 @@ class LocalDataSource {
     }
     return null;
   }
+
+  Future<void> saveRecentSearches(List<String> searches) async {
+    await box.put("recent_searches", searches);
+  }
+
+  List<String> getRecentSearches() {
+    final data = box.get("recent_searches");
+    if (data is List) {
+      return List<String>.from(data);
+    }
+    return [];
+  }
 }
 

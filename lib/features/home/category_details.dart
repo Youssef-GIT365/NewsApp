@@ -45,11 +45,19 @@ class _CategoryDetailsState extends State<CategoryDetails> {
     return Scaffold(
       drawer: Drawer(child: CustomDrawer()),
       appBar: AppBar(
-        title: Text(widget.categoryId.isNotEmpty
-            ? widget.categoryId[0].toUpperCase() + widget.categoryId.substring(1)
-            : "News"),
+        title: Text(
+          widget.categoryId.isNotEmpty
+              ? widget.categoryId[0].toUpperCase() +
+                    widget.categoryId.substring(1)
+              : "News",
+        ),
         actions: [
-          IconButton(onPressed: () {}, icon: Assets.icons.searchIcon.image()),
+          IconButton(
+            onPressed: () {
+              context.push('/search', extra: widget.categoryId);
+            },
+            icon: Assets.icons.searchIcon.image(),
+          ),
         ],
       ),
       body: vm.SourceList.isEmpty
@@ -86,9 +94,12 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                           itemBuilder: (context, index) {
                             final item = vmforsources.sources[index];
                             String time = "";
+                            
                             try {
                               if (item.publishedAt.isNotEmpty) {
-                                DateTime parsedDate = DateTime.parse(item.publishedAt);
+                                DateTime parsedDate = DateTime.parse(
+                                  item.publishedAt,
+                                );
                                 time = timeago.format(parsedDate);
                               }
                             } catch (_) {
@@ -114,9 +125,14 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                                         context: context,
                                         isScrollControlled: true,
                                         builder: (context) {
-                                          String removeHtmlTags(String htmlString) {
+                                          String removeHtmlTags(
+                                            String htmlString,
+                                          ) {
                                             return htmlString
-                                                .replaceAll(RegExp(r'<[^>]*>'), '')
+                                                .replaceAll(
+                                                  RegExp(r'<[^>]*>'),
+                                                  '',
+                                                )
                                                 .trim();
                                           }
 
@@ -126,61 +142,93 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                                               height: 450,
                                               decoration: BoxDecoration(
                                                 color: Colors.black,
-                                                borderRadius: BorderRadius.circular(16),
+                                                borderRadius:
+                                                    BorderRadius.circular(16),
                                               ),
                                               child: Padding(
-                                                padding: const EdgeInsets.all(8.0),
+                                                padding: const EdgeInsets.all(
+                                                  8.0,
+                                                ),
                                                 child: Column(
                                                   children: [
                                                     ClipRRect(
                                                       borderRadius:
-                                                          BorderRadius.circular(16),
-                                                      child: item.UrlImage.isNotEmpty
+                                                          BorderRadius.circular(
+                                                            16,
+                                                          ),
+                                                      child:
+                                                          item
+                                                              .UrlImage
+                                                              .isNotEmpty
                                                           ? Image.network(
                                                               item.UrlImage,
                                                               height: 180,
-                                                              width: double.infinity,
+                                                              width: double
+                                                                  .infinity,
                                                               fit: BoxFit.cover,
                                                               errorBuilder:
-                                                                  (context, error, stackTrace) =>
-                                                                      Container(
-                                                                height: 180,
-                                                                color: Colors.grey.shade800,
-                                                                child: const Center(
-                                                                  child: Icon(
-                                                                    Icons.broken_image,
-                                                                    color: Colors.white54,
-                                                                    size: 40,
+                                                                  (
+                                                                    context,
+                                                                    error,
+                                                                    stackTrace,
+                                                                  ) => Container(
+                                                                    height: 180,
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .shade800,
+                                                                    child: const Center(
+                                                                      child: Icon(
+                                                                        Icons
+                                                                            .broken_image,
+                                                                        color: Colors
+                                                                            .white54,
+                                                                        size:
+                                                                            40,
+                                                                      ),
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                              ),
                                                             )
-                                                          : const SizedBox(height: 180),
+                                                          : const SizedBox(
+                                                              height: 180,
+                                                            ),
                                                     ),
                                                     Padding(
-                                                      padding: const EdgeInsets.all(8.0),
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                            8.0,
+                                                          ),
                                                       child: Text(
-                                                        removeHtmlTags(item.content),
-                                                        maxLines: 4,
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: theme.textTheme.bodyLarge!
-                                                            .copyWith(
-                                                          color: Appcolors.MainBackWhite,
+                                                        removeHtmlTags(
+                                                          item.content,
                                                         ),
+                                                        maxLines: 4,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: theme
+                                                            .textTheme
+                                                            .bodyLarge!
+                                                            .copyWith(
+                                                              color: Appcolors
+                                                                  .MainBackWhite,
+                                                            ),
                                                       ),
                                                     ),
                                                     const Spacer(),
                                                     ElevatedButton(
                                                       style: ElevatedButton.styleFrom(
-                                                        backgroundColor: Colors.white,
-                                                        foregroundColor: Colors.black,
+                                                        backgroundColor:
+                                                            Colors.white,
+                                                        foregroundColor:
+                                                            Colors.black,
                                                         minimumSize: const Size(
                                                           double.infinity,
                                                           56,
                                                         ),
                                                         shape: RoundedRectangleBorder(
                                                           borderRadius:
-                                                              BorderRadius.circular(25),
+                                                              BorderRadius.circular(
+                                                                25,
+                                                              ),
                                                         ),
                                                       ),
                                                       onPressed: () {
@@ -193,7 +241,8 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                                                       child: const Text(
                                                         "View Full Article",
                                                         style: TextStyle(
-                                                          fontWeight: FontWeight.bold,
+                                                          fontWeight:
+                                                              FontWeight.bold,
                                                         ),
                                                       ),
                                                     ),
@@ -207,24 +256,30 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                                     },
                                     child: item.UrlImage.isNotEmpty
                                         ? ClipRRect(
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius: BorderRadius.circular(
+                                              8,
+                                            ),
                                             child: Image.network(
                                               item.UrlImage,
                                               width: double.infinity,
                                               height: 180,
                                               fit: BoxFit.cover,
-                                              errorBuilder: (context, error, stackTrace) =>
-                                                  Container(
-                                                height: 180,
-                                                color: Colors.grey.shade200,
-                                                child: const Center(
-                                                  child: Icon(
-                                                    Icons.broken_image,
-                                                    color: Colors.grey,
-                                                    size: 40,
+                                              errorBuilder:
+                                                  (
+                                                    context,
+                                                    error,
+                                                    stackTrace,
+                                                  ) => Container(
+                                                    height: 180,
+                                                    color: Colors.grey.shade200,
+                                                    child: const Center(
+                                                      child: Icon(
+                                                        Icons.broken_image,
+                                                        color: Colors.grey,
+                                                        size: 40,
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
                                             ),
                                           )
                                         : const SizedBox.shrink(),
@@ -238,25 +293,28 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                                   ),
                                   const SizedBox(height: 8),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Expanded(
                                         child: Text(
                                           "By : ${item.author}",
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                          style: theme.textTheme.bodyLarge!.copyWith(
-                                            color: const Color(0xffA0A0A0),
-                                            fontSize: 12,
-                                          ),
+                                          style: theme.textTheme.bodyLarge!
+                                              .copyWith(
+                                                color: const Color(0xffA0A0A0),
+                                                fontSize: 12,
+                                              ),
                                         ),
                                       ),
                                       Text(
                                         time,
-                                        style: theme.textTheme.bodyLarge!.copyWith(
-                                          color: const Color(0xffA0A0A0),
-                                          fontSize: 12,
-                                        ),
+                                        style: theme.textTheme.bodyLarge!
+                                            .copyWith(
+                                              color: const Color(0xffA0A0A0),
+                                              fontSize: 12,
+                                            ),
                                       ),
                                     ],
                                   ),
@@ -271,4 +329,3 @@ class _CategoryDetailsState extends State<CategoryDetails> {
     );
   }
 }
-

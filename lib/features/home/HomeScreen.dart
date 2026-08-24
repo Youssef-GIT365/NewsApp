@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:news/core/gen/assets.gen.dart';
 import 'package:news/core/l10n/app_localizations.dart';
 import 'package:news/core/models/category_model.dart';
@@ -55,7 +56,12 @@ class Homescreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         actions: [
-          IconButton(onPressed: () {}, icon: Assets.icons.searchIcon.image()),
+          IconButton(
+            onPressed: () {
+              context.push('/search');
+            },
+            icon: Assets.icons.searchIcon.image(),
+          ),
         ],
 
         title: Text(local.home, style: theme.textTheme.titleLarge),

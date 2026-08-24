@@ -1,5 +1,14 @@
 {
   "home": "home",
   "go_to_home": "Go To Home",
-  "good_morning": "Good Morning Here is Some News For You"
+  "good_morning": "Good Morning Here is Some News For You",
+  "search": "Search",
+  "search_news": "Search news...",
+  "recent_searches": "Recent Searches",
+  "suggested_topics": "Suggested Topics",
+  "clear_all": "Clear All",
+  "no_results_found": "No news found",
+  "try_different_search": "Try searching with different keywords",
+  "view_full_article": "View Full Article",
+  "try_again": "Try Again"
 }

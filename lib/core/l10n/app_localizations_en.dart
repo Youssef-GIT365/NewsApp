@@ -16,4 +16,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get good_morning => 'Good Morning Here is Some News For You';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get search_news => 'Search news...';
+
+  @override
+  String get recent_searches => 'Recent Searches';
+
+  @override
+  String get suggested_topics => 'Suggested Topics';
+
+  @override
+  String get clear_all => 'Clear All';
+
+  @override
+  String get no_results_found => 'No news found';
+
+  @override
+  String get try_different_search => 'Try searching with different keywords';
+
+  @override
+  String get view_full_article => 'View Full Article';
+
+  @override
+  String get try_again => 'Try Again';
 }

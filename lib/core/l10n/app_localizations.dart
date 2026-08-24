@@ -115,6 +115,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Good Morning Here is Some News For You'**
   String get good_morning;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @search_news.
+  ///
+  /// In en, this message translates to:
+  /// **'Search news...'**
+  String get search_news;
+
+  /// No description provided for @recent_searches.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Searches'**
+  String get recent_searches;
+
+  /// No description provided for @suggested_topics.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested Topics'**
+  String get suggested_topics;
+
+  /// No description provided for @clear_all.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear All'**
+  String get clear_all;
+
+  /// No description provided for @no_results_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No news found'**
+  String get no_results_found;
+
+  /// No description provided for @try_different_search.
+  ///
+  /// In en, this message translates to:
+  /// **'Try searching with different keywords'**
+  String get try_different_search;
+
+  /// No description provided for @view_full_article.
+  ///
+  /// In en, this message translates to:
+  /// **'View Full Article'**
+  String get view_full_article;
+
+  /// No description provided for @try_again.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get try_again;
 }
 
 class _AppLocalizationsDelegate
