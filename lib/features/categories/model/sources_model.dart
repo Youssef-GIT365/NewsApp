@@ -23,4 +23,14 @@ class SourcesModel {
       url: json["url"] ?? "",
     );
   }
+  Map<String, dynamic> toJson() {
+    return {
+      'urlToImage': UrlImage,
+      'author': author,
+      'content': content,
+      'publishedAt': publishedAt,
+      'title': title,
+      'url': url,
+    };
+  }
 }

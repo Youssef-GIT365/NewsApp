@@ -5,7 +5,7 @@ class LocalizationCubit extends Cubit<String> {
   LocalizationCubit() : super("en");
   void loadLang() async {
     final instance = await SharedPreferences.getInstance();
-    final lang = await instance.getString("lang") ?? "en";
+    final lang = instance.getString("lang") ?? "en";
     emit(lang);
   }
 

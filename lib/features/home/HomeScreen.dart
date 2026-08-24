@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/core/gen/assets.gen.dart';
 import 'package:news/core/l10n/app_localizations.dart';
 import 'package:news/core/models/category_model.dart';

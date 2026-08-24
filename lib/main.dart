@@ -4,15 +4,19 @@ import 'package:news/core/l10n/app_localizations.dart';
 import 'package:news/core/routes/app_routes.dart';
 import 'package:news/core/theme/app_theme.dart';
 import 'package:news/features/categories/viewModel/localization_cubit.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await Hive.openBox('news');
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
